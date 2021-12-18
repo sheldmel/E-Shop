@@ -9,13 +9,12 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { addToCart } from "../actions/cartActions";
 
-
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
 
   const { id } = useParams();
   const dispatch = useDispatch();
-  const nav = useNavigate()
+  const nav = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const productDetails = useSelector((state) => state.productDetails);
@@ -25,9 +24,9 @@ const ProductScreen = () => {
   }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product._id, qty))
-    nav(`/cart`)
-  }
+    dispatch(addToCart(product._id, qty));
+    nav(`/cart`);
+  };
 
   return (
     <>
@@ -103,12 +102,19 @@ const ProductScreen = () => {
                   onClick={addToCartHandler}
                   className="btn-block"
                   type="button"
-                  disabled={product.countInStock === 0 || cartItems.find((x) => x._id === product._id)}
+                  disabled={
+                    product.countInStock === 0 ||
+                    cartItems.find((x) => x._id === product._id)
+                  }
                 >
                   Add To Cart
                 </Button>
                 <br></br>
-                {cartItems.find((x) => x._id === product._id) &&         <Message >Already in your <Link to='/cart'>cart</Link></Message>}
+                {cartItems.find((x) => x._id === product._id) && (
+                  <Message>
+                    Already in your <Link to="/cart">cart</Link>
+                  </Message>
+                )}
               </ListGroup.Item>
             </ListGroup>
           </Col>
