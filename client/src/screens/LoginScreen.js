@@ -12,7 +12,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const nav = useNavigate()
+  const nav = useNavigate();
   const location = useLocation();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -20,23 +20,22 @@ const LoginScreen = () => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-
-  useEffect(()=>{
-      if(userInfo){
-          nav(redirect)
-      }
-  }, [nav, redirect, userInfo])
+  useEffect(() => {
+    if (userInfo) {
+      nav(redirect);
+    }
+  }, [nav, redirect, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password))
+    dispatch(login(email, password));
   };
 
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader text={'Loggin In...'}/>}
+      {error && <Message variant="danger">{error}</Message>}
+      {loading && <Loader text={"Loggin In..."} />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -48,17 +47,17 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group className="my-3" controlId='password'>
+        <Form.Group className="my-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='Enter password'
+            type="password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button className="my-3" type='submit' variant='primary'>
+        <Button className="my-3" type="submit" variant="primary">
           Sign In
         </Button>
       </Form>

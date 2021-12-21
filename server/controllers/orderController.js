@@ -35,3 +35,44 @@ export const addOrderItems = asyncHandler(async (req, res) => {
       res.status(201).send(createdOrder)
   }
 });
+
+// GET Get Order by ID - Private
+export const getOrderById = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id).populate('user', 'name email')
+    if(order){
+        res.send(order)
+    }
+    else{
+        res.status(404)
+        throw new Error("Order not found")
+    }
+});
+
+// PUT Update Order to paid - Private
+export const updateOrderToPaid = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+    if(order){
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.payer.email_address
+        }
+
+        const updatedOrder = await order.save()
+
+        res.send(updatedOrder)
+    }
+    else{
+        res.status(404)
+        throw new Error("Order not found")
+    }
+});
+
+// GET Get logged in user orders - Private
+export const getUserOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find({ user : req.user._id})
+    res.send(orders)
+});
