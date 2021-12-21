@@ -132,14 +132,15 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
 export const updateUserDetails = (user) => async (dispatch, getState) => {
   try {
-    const {
-      userLogin: { userInfo },
-    } = getState();
 
     dispatch({
       type: USER_UPDATE_REQUEST,
     });
 
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    
     const config = {
       headers: {
         "Content-Type": "application/json",

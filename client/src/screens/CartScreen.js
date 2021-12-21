@@ -20,11 +20,16 @@ const CartScreen = () => {
   const nav = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const removeFromCartHandler = (id) => {
       dispatch(removeFromCart(id))
   };
   const checkoutHandler = () => {
-    nav(`/login?redirect=shipping`);
+    if(userInfo){
+      nav('/login')
+    }
+    nav(`/shipping`);
   };
   return (
     <Row>
