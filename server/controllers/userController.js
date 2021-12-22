@@ -97,5 +97,51 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 // GET all users - Private (ADMIN)
 export const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
-  res.json(users)
+  res.send(users)
+});
+
+// DELETE delete user - Private (ADMIN)
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if(user){
+    await user.remove()
+    res.send({message: 'User removed'})
+  }else{
+    res.status(404)
+    throw new Error('User not found')
+  }
+});
+
+// GET user by id - Private (ADMIN)
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+  if(user){
+    res.send(user)
+  }
+  else{
+    res.status(404)
+    throw new Error('User not found')
+  }
+});
+
+// PUT Update User - Private (ADMIN)
+export const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.isAdmin = req.body.isAdmin
+
+    const updatedUser = await user.save()
+
+    res.send({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
