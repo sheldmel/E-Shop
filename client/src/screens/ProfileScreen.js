@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserDetails } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
+import { USER_UPDATE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,6 @@ const ProfileScreen = () => {
   const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const location = useLocation();
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
@@ -35,6 +35,7 @@ const ProfileScreen = () => {
       nav("/login");
     } else {
       if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_RESET })
         dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
       } else {
