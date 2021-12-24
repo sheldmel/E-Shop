@@ -63,7 +63,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.category = category;
     product.countInStock = countInStock;
 
-    res.status(201).send(product);
     const updatedProduct = await product.save();
     res.status(201).send(updatedProduct);
 
