@@ -32,7 +32,7 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      nav(`/order/${order._id}`);
+      nav(`/orders/${order._id}`);
     }
     // eslint-disable-next-line
   }, [success, nav]);
