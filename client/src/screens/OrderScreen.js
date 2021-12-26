@@ -6,6 +6,7 @@ import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/FormContainer";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import {
   getOrderDetails,
   payOrder,
@@ -21,7 +22,7 @@ const OrderScreen = () => {
 
   const [sdkReady, setSdkReady] = useState(false);
 
-  const nav = useNavigate()
+  const nav = useNavigate();
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -37,8 +38,8 @@ const OrderScreen = () => {
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
   useEffect(() => {
-    if(!userInfo){
-      nav(`/login`)
+    if (!userInfo) {
+      nav(`/login`);
     }
     const addPaypalScript = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
@@ -63,7 +64,7 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, id, successPay, successDeliver, order]);
+  }, [nav, userInfo, dispatch, id, successPay, successDeliver, order]);
 
   //   Calculate prices
   const addDecimals = (num) => {
@@ -90,6 +91,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
+      <Meta title="E-Shop | Order" />
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
@@ -209,18 +211,23 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
-              {loadingDeliver && <Loader text={'Marking Order as Delivered...'}/>}
-              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <ListGroup.Item>
-                  <Button
-                    type="button"
-                    className="btn btn-block"
-                    onClick={deliverHandler}
-                  >
-                    Mark as Delivered
-                  </Button>
-                </ListGroup.Item>
+              {loadingDeliver && (
+                <Loader text={"Marking Order as Delivered..."} />
               )}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverHandler}
+                    >
+                      Mark as Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>

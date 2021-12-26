@@ -21,7 +21,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>E-Shop</Navbar.Brand>
           </LinkContainer>
-          <SearchBox/>
+          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">

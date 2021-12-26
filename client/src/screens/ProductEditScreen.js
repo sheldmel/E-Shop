@@ -5,10 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { listProductDetails, updateProduct } from "../actions/productActions";
-import { PRODUCT_UPDATE_RESET, PRODUCT_DETAILS_RESET } from "../constants/productConstants";
+import {
+  PRODUCT_UPDATE_RESET,
+  PRODUCT_DETAILS_RESET,
+} from "../constants/productConstants";
 
 const ProductEditScreen = () => {
   const { id } = useParams();
@@ -37,7 +41,7 @@ const ProductEditScreen = () => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
-      dispatch({type: PRODUCT_DETAILS_RESET});
+      dispatch({ type: PRODUCT_DETAILS_RESET });
       nav(`/admin/productList`);
     } else {
       if (!product.name || product._id !== id) {
@@ -93,6 +97,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
+      <Meta title="E-Shop | Edit Product" />
       <Link to="/admin/productList" className="btn btn-light my-3">
         Go Back
       </Link>
@@ -134,10 +139,10 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-               <Form.Control
-                type='file'
-                id='image-file'
-                label='Choose File'
+              <Form.Control
+                type="file"
+                id="image-file"
+                label="Choose File"
                 custom
                 onChange={uploadFileHandler}
               />

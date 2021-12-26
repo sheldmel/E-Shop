@@ -9,6 +9,7 @@ import {
   createProductReview,
 } from "../actions/productActions";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import Message from "../components/Message";
 import { addToCart } from "../actions/cartActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
@@ -59,6 +60,7 @@ const ProductScreen = () => {
   };
   return (
     <>
+      <Meta title={product.name} />
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
@@ -194,7 +196,7 @@ const ProductScreen = () => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button className='mt-3' type="submit" variant="primary">
+                      <Button className="mt-3" type="submit" variant="primary">
                         Submit Review
                       </Button>
                     </Form>

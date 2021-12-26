@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { getUserDetails, updateUser } from "../actions/userActions";
@@ -19,41 +20,44 @@ const UserEditScreen = () => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
-  
+
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate;
-  
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   useEffect(() => {
-      if(successUpdate){
-          dispatch({ type: USER_ADMIN_UPDATE_RESET })
-          nav(`/admin/userList`)
+    if (successUpdate) {
+      dispatch({ type: USER_ADMIN_UPDATE_RESET });
+      nav(`/admin/userList`);
+    } else {
+      if (!user.name || user._id !== id) {
+        dispatch(getUserDetails(id));
+      } else {
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
       }
-      else{
-        if(!user.name || user._id !== id){
-            dispatch(getUserDetails(id))
-          }
-          else{
-              setName(user.name)
-              setEmail(user.email)
-              setIsAdmin(user.isAdmin)
-          }
-      }
+    }
   }, [user, dispatch, id, successUpdate, nav]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({_id: user._id, name, email, isAdmin}))
+    dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
   };
 
   return (
     <>
+      <Meta title="E-Shop | Edit User" />
       <Link to="/admin/userList" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
-        {loadingUpdate && <Loader text={"Updating User..."}/>}
-        {errorUpdate &&  <Message variant="danger">{errorUpdate}</Message>}
+        {loadingUpdate && <Loader text={"Updating User..."} />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader text={"Fetching User Info..."} />
         ) : error ? (

@@ -3,6 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Meta from "../components/Meta";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listOrders } from "../actions/orderActions";
@@ -23,10 +24,11 @@ const OrderListScreen = () => {
     } else {
       nav("/login");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, nav]);
 
   return (
     <>
+      <Meta title="E-Shop | Orders" />
       <h1>Orders</h1>
       {loading ? (
         <Loader />

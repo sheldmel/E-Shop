@@ -4,6 +4,7 @@ import { Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import Loader from "../components/Loader";
 import { listUsers, deleteUser } from "../actions/userActions";
 
@@ -29,12 +30,13 @@ const UserListScreen = () => {
   }, [dispatch, nav, userInfo, successDelete]);
 
   const deleteHandler = (user) => {
-      if(window.confirm(`Are you sure you want to delete ${user.name}`)){
-        dispatch(deleteUser(user._id));
-      }
+    if (window.confirm(`Are you sure you want to delete ${user.name}`)) {
+      dispatch(deleteUser(user._id));
+    }
   };
   return (
     <>
+      <Meta title="E-Shop | User List" />
       <h1>Users</h1>
       {loading ? (
         <Loader />
