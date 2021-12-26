@@ -26,6 +26,12 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
+            <Route path="/page/:pageNumber" element={<HomeScreen />} exact/>
+            <Route path="/search/:search" element={<HomeScreen />} exact/>
+            <Route
+              path="/search/:search/page/:pageNumber"
+              element={<HomeScreen /> }
+            />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
@@ -35,12 +41,16 @@ const App = () => {
             <Route path="/products/:id" element={<ProductScreen />} />
             <Route path="/orders/:id" element={<OrderScreen />} />
             <Route path="/cart" element={<CartScreen />} />
-            
+
             {/* ADMIN only */}
             <Route path="/admin/userList" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
-            <Route path="/admin/productList" element={<ProductListScreen />} />
-            <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
+            <Route path="/admin/productList" element={<ProductListScreen />} exact/>
+            <Route path="/admin/productList/:pageNumber" element={<ProductListScreen />} exact/>
+            <Route
+              path="/admin/product/:id/edit"
+              element={<ProductEditScreen />}
+            />
             <Route path="/admin/orderList" element={<OrderListScreen />} />
           </Routes>
         </Container>

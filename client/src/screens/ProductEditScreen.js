@@ -8,7 +8,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { listProductDetails, updateProduct } from "../actions/productActions";
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
+import { PRODUCT_UPDATE_RESET, PRODUCT_DETAILS_RESET } from "../constants/productConstants";
 
 const ProductEditScreen = () => {
   const { id } = useParams();
@@ -37,6 +37,7 @@ const ProductEditScreen = () => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
+      dispatch({type: PRODUCT_DETAILS_RESET});
       nav(`/admin/productList`);
     } else {
       if (!product.name || product._id !== id) {

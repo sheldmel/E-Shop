@@ -3,8 +3,19 @@ import Product from "../models/productModel.js";
 
 // GET all Products - Public
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.send(products);
+  const pageSize= 2
+  const page = Number(req.query.pageNumber) || 1
+
+  const search = req.query.search ? {
+    name: {
+      $regex: req.query.search,
+      $options: 'i'
+    }
+  }: {}
+
+  const count = await Product.countDocuments({ ...search })
+  const products = await Product.find({...search}).limit(pageSize).skip(pageSize * (page-1));
+  res.send({products, page, pages: Math.ceil(count / pageSize)});
 });
 
 // GET single Product - Public
