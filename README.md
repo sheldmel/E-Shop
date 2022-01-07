@@ -4,7 +4,7 @@
 * [Technologies](#technologies)
 
 ## General info
-E-Shop is an e-commerce web app tyhat allows users to view, add products to their cart and purchase products using paypal. The application is built using the MERN stack.
+E-Shop is an e-commerce web app that allows users to view, add products to their cart and purchase products using paypal. The application is built using the MERN stack.
 	
 ## Technologies
 
